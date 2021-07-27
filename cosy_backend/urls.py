@@ -17,12 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from cosyapp import views
+# from cosyapp.views import UploadList
 
 router = routers.DefaultRouter()
 router.register(r'projects', views.ProjectView, 'cosyapp')
+router.register(r'parts', views.PartView, 'cosyapp')
+router.register(r'tasks', views.TaskView, 'cosyapp')
+router.register(r'uploads', views.ProjectView, 'cosyapp')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    # add separate media/uploads path?
+    path('media/', include(router.urls))
+    # path('uploads/', UploadList.as_view()),
 ]

@@ -1,8 +1,16 @@
 from django.contrib import admin
-from .models import Project
+from .models import Project, Part, Task
 
 # Register your models here.
 class ProjectAdmin(admin.ModelAdmin):
-    list = ('id', 'title', 'series', 'due_date', 'budget', 'completed')
+    list = ('id', 'title', 'series', 'due_date', 'budget', 'completed', 'photo')
+
+class PartAdmin(admin.ModelAdmin):
+    list = ('id', 'name', 'project')
+
+class TaskAdmin(admin.ModelAdmin):
+    list = ('id', 'description', 'completed', 'part')
 
 admin.site.register(Project, ProjectAdmin)
+admin.site.register(Part, PartAdmin)
+admin.site.register(Task, TaskAdmin)

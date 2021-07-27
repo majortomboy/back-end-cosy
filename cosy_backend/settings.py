@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v6!n%#huzyo)*v9_kx%&1f0v78&m13=q94__od%80!(^zt=$^i'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -83,12 +84,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'cosy_web_app_development',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': str(os.getenv('DEVELOPMENT_DATABASE_PASSWORD')),
         'HOST': 'localhost',
         'PORT': '',
     }
 }
-
 
 
 # Password validation
@@ -141,4 +141,7 @@ CORS_ORIGIN_WHITELIST = [
 
 CORS_ALLOW_HEADERS = ("x-requested-with", "content-type", "accept", "origin", "authorization", "x-csrftoken")
 
-MEDIA_ROOT = 'media/'
+# MEDIA_ROOT = 'media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/' # http://localhost:8000/media/

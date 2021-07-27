@@ -18,7 +18,7 @@ class Project(models.Model):
 
 class Part(models.Model):
     name = models.CharField(max_length=100)
-    project = models.ForeignKey(Project,verbose_name='Project',related_name='part',on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -26,7 +26,7 @@ class Part(models.Model):
 class Task(models.Model):
     description = models.CharField(max_length=150)
     completed = models.BooleanField(default=False)
-    part = models.ForeignKey(Part,verbose_name='Part',related_name='task',on_delete=models.CASCADE)
+    part = models.ForeignKey(Part, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description

@@ -6,6 +6,12 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ('id', 'title', 'series', 'due_date', 'budget', 'completed', 'photo')
 
+class UploadSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Project
+        fields = ('photo')
+
 class PartSerializer(serializers.ModelSerializer):
 
     class Meta:
