@@ -15,19 +15,36 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
 from rest_framework import routers
 from cosyapp import views
+from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf import settings
 # from cosyapp.views import UploadList
 
-router = routers.DefaultRouter()
-router.register(r'projects', views.ProjectView, 'cosyapp')
-router.register(r'parts', views.PartView, 'cosyapp')
-router.register(r'tasks', views.TaskView, 'cosyapp')
-router.register(r'uploads', views.ProjectView, 'cosyapp')
+# router = routers.DefaultRouter()
+# router.register(r'projects', views.ProjectView, 'cosyapp')
+# router.register(r'parts', views.PartView, 'cosyapp')
+# router.register(r'tasks', views.TaskView, 'cosyapp')
+# router.register(r'uploads', views.ProjectView, 'cosyapp')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('media/', include(router.urls))
+    # path('api/', include(router.urls)),
+    path('projects/', views.ProjectList.as_view()),
+    path('projects/<int:pk>/', views.ProjectDetail.as_view()),
+    path('projects/<int:pk>/parts/', views.ProjectPartsList.as_view()),
+    # path('parts/<int:pk>/', views.PartDetail.as_view()),
+    path('parts/<int:pk>/tasks/', views.PartTasksList.as_view()),
+    # maybe don't need this ^ ?
+    path('tasks/<int:pk>/', views.TaskDetail.as_view()),
+    # static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # path('media/', include(router.urls))
     # path('uploads/', UploadList.as_view()),
 ]
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# I want my routes to look like: http://localhost:8000/projects/2/parts ... I think?
+# These are the routes I want:
+# 'projects/<int:pk>/parts/<int:pk>/tasks'
+# projects/<int:pk>/
