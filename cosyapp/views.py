@@ -6,9 +6,9 @@ from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
 from rest_framework.urlpatterns import format_suffix_patterns
-from .serializers import PartSerializer, ProjectSerializer, TaskSerializer
+from .serializers import PartSerializer, ProjectSerializer, TaskSerializer, ToBuyItemSerializer
 from rest_framework import viewsets, status, generics
-from .models import Project, Part, Task
+from .models import Project, Part, Task, ToBuyItem
 
 # Create your views here.
 
@@ -26,7 +26,7 @@ class ProjectList(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_404_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProjectDetail(APIView):
     """
@@ -105,34 +105,6 @@ class ProjectPartDetail(generics.ListAPIView):
         part = self.get_part(pk)
         part.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-# class PartDetail(APIView):
-#     """
-#     Retrieve, update, or delete a part instance.
-#     """
-#     def get_part(self, pk):
-#         try:
-#             return Part.objects.get(pk=pk)
-#         except Part.DoesNotExist:
-#             raise Http404
-
-#     def get(self, request, pk, format=None):
-#         part = self.get_part(pk)
-#         serializer = PartSerializer(part)
-#         return Response(serializer.data)
-
-#     def put(self, request, pk, format=None):
-#         part = self.get_part(pk)
-#         serializer = PartSerializer(part, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#     def delete(self, request, pk, format=None):
-#         part = self.get_part(pk)
-#         part.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
 class PartTasksList(generics.ListAPIView):
     serializer_class = TaskSerializer
 
@@ -152,7 +124,7 @@ class TaskList(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_404_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TaskDetail(APIView):
     """
@@ -181,6 +153,12 @@ class TaskDetail(APIView):
         task = self.get_task(pk)
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ProjectToBuyList(generics.ListAPIView):
+    serializer_class = ToBuyItemSerializer
+
+    def get_queryset(self):
+        return ToBuyItem.objects.filter(project=self.kwargs.get('pk'))
 
 # class ProjectView(viewsets.ModelViewSet):
 #     serializer_class = ProjectSerializer

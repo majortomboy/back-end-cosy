@@ -31,6 +31,13 @@ class Task(models.Model):
     def __str__(self):
         return self.description
 
+class ToBuyItem(models.Model):
+    description = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    link = models.URLField(max_length=200)
+    completed = models.BooleanField(default=False)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
 # from django.contrib.auth.models import  User, Group
 # class Portfolio(models.Model):
 #  owner = models.ForeignKey(User,verbose_name = 'User',related_name='portfolios')

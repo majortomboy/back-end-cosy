@@ -11,6 +11,9 @@ class PartAdmin(admin.ModelAdmin):
 class TaskAdmin(admin.ModelAdmin):
     list = ('id', 'description', 'completed', 'part')
 
+class ToBuyItemAdmin(admin.ModelAdmin):
+    list = ('id', 'description', 'price', 'link', 'completed', 'project')
+
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Part, PartAdmin)
 admin.site.register(Task, TaskAdmin)

@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Project, Part, Task
+from .models import Project, Part, Task, ToBuyItem
+
 class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -16,3 +17,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ('id', 'title', 'series', 'due_date', 'budget', 'completed', 'photo')
+
+class ToBuyItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ToBuyItem
+        fields = ('id', 'description', 'price', 'link' 'completed', 'project')

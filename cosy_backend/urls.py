@@ -34,17 +34,9 @@ urlpatterns = [
     path('projects/', views.ProjectList.as_view()),
     path('projects/<int:pk>/', views.ProjectDetail.as_view()),
     path('projects/<int:pk>/parts/', views.ProjectPartsList.as_view()),
-    # path('parts/<int:pk>/', views.PartDetail.as_view()),
+    path('projects/<int:pk>/tobuyitems/', views.ProjectPartsList.as_view()),
     path('parts/<int:pk>/tasks/', views.PartTasksList.as_view()),
-    # maybe don't need this ^ ?
     path('tasks/<int:pk>/', views.TaskDetail.as_view()),
-    # static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    # path('media/', include(router.urls))
-    # path('uploads/', UploadList.as_view()),
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# I want my routes to look like: http://localhost:8000/projects/2/parts ... I think?
-# These are the routes I want:
-# 'projects/<int:pk>/parts/<int:pk>/tasks'
-# projects/<int:pk>/
