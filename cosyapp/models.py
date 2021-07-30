@@ -9,7 +9,7 @@ class Project(models.Model):
     due_date = models.DateField()
     budget = models.DecimalField(max_digits=10, decimal_places=2)
     completed = models.BooleanField(default=False)
-    photo = models.ImageField(default=None, upload_to='uploads/')
+    photo = models.ImageField(default=None, blank=True, upload_to='uploads/')
 
     # need to create relationship with User class?
 
@@ -34,9 +34,12 @@ class Task(models.Model):
 class ToBuyItem(models.Model):
     description = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    link = models.URLField(max_length=200)
+    link = models.URLField(max_length=200, blank=True)
     completed = models.BooleanField(default=False)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.description
 
 # from django.contrib.auth.models import  User, Group
 # class Portfolio(models.Model):

@@ -22,4 +22,4 @@ class ToBuyItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ToBuyItem
-        fields = ('id', 'description', 'price', 'link' 'completed', 'project')
+        fields = ('id', 'description', 'price', 'link', 'completed', 'project')

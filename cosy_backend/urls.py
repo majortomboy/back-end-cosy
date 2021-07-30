@@ -34,9 +34,12 @@ urlpatterns = [
     path('projects/', views.ProjectList.as_view()),
     path('projects/<int:pk>/', views.ProjectDetail.as_view()),
     path('projects/<int:pk>/parts/', views.ProjectPartsList.as_view()),
-    path('projects/<int:pk>/tobuyitems/', views.ProjectPartsList.as_view()),
+    path('projects/<int:pk>/tobuyitems/', views.ProjectToBuyList.as_view()),
     path('parts/<int:pk>/tasks/', views.PartTasksList.as_view()),
     path('tasks/<int:pk>/', views.TaskDetail.as_view()),
+    path('parts/', views.PartList.as_view()),
+    path('tasks/', views.TaskList.as_view()),
+    path('tobuyitems/', views.ToBuyList.as_view()),
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

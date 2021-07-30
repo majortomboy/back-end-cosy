@@ -1,6 +1,8 @@
 from django.db.models import query
+from django.http.response import HttpResponseRedirect
 from django.views.generic import ListView
 from django.shortcuts import render
+from rest_framework import response
 from rest_framework.views import APIView
 from django.http import Http404
 from rest_framework.response import Response
@@ -56,27 +58,37 @@ class ProjectDetail(APIView):
         project.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class ProjectPartsList(generics.ListAPIView):
+class ProjectPartsList(generics.ListCreateAPIView): # should this be ListCreateAPIView? or ListAPIView?
     serializer_class = PartSerializer
 
     def get_queryset(self):
         return Part.objects.filter(project=self.kwargs.get('pk'))
 
-# class PartList(APIView):
-#     '''
-#     List all projects, or create a new part
-#     '''
-#     def get(self, request, format=None):
-#         parts = Part.objects.all()
-#         serializer = PartSerializer(parts, many=True)
-#         return Response(serializer.data)
+    def post(self, request, pk):
+        print(request.data)
+        part = Part(name=request.data["name"], project=Project.objects.get(id=pk))
 
-#     def post(self, request, format=None):
-#         serializer = PartSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_404_BAD_REQUEST)
+        serializer = PartSerializer(part, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PartList(APIView):
+    '''
+    List all projects, or create a new project
+    '''
+    def get(self, request, format=None):
+        parts = Part.objects.all()
+        serializer = PartSerializer(parts, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = PartSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProjectPartDetail(generics.ListAPIView):
     """
@@ -105,14 +117,22 @@ class ProjectPartDetail(generics.ListAPIView):
         part = self.get_part(pk)
         part.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-class PartTasksList(generics.ListAPIView):
+class PartTasksList(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
 
     def get_queryset(self):
         return Task.objects.filter(part=self.kwargs.get('pk'))
+
+    # def post(self, request, format=None):
+    #     serializer = TaskSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class TaskList(APIView):
     '''
-    List all projects, or create a new part
+    List all parts, or create a new part
     '''
     def get(self, request, format=None):
         tasks = Task.objects.all()
@@ -154,11 +174,34 @@ class TaskDetail(APIView):
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class ProjectToBuyList(generics.ListAPIView):
+class ProjectToBuyList(generics.ListCreateAPIView):
     serializer_class = ToBuyItemSerializer
 
     def get_queryset(self):
         return ToBuyItem.objects.filter(project=self.kwargs.get('pk'))
+
+class ToBuyList(APIView):
+    '''
+    List all parts, or create a new part
+    '''
+    def get(self, request, format=None):
+        items = ToBuyItem.objects.all()
+        serializer = ToBuyItemSerializer(items, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ToBuyItemSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def post(self, request, format=None):
+    #     serializer = ToBuyItemSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # class ProjectView(viewsets.ModelViewSet):
 #     serializer_class = ProjectSerializer

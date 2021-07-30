@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Part, Task
+from .models import Project, Part, Task, ToBuyItem
 
 # Register your models here.
 class ProjectAdmin(admin.ModelAdmin):
@@ -17,3 +17,4 @@ class ToBuyItemAdmin(admin.ModelAdmin):
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Part, PartAdmin)
 admin.site.register(Task, TaskAdmin)
+admin.site.register(ToBuyItem, ToBuyItemAdmin)
