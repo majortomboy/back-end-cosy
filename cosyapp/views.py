@@ -90,33 +90,33 @@ class PartList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ProjectPartDetail(generics.ListAPIView):
-    """
-    Retrieve, update, or delete a part instance.
-    """
-    def get_part(self, pk):
-        try:
-            return Part.objects.get(pk=pk)
-        except Part.DoesNotExist:
-            raise Http404
+# class ProjectPartDetail(generics.ListAPIView):
+#     """
+#     Retrieve, update, or delete a part instance.
+#     """
+#     def get_part(self, pk):
+#         try:
+#             return Part.objects.get(pk=pk)
+#         except Part.DoesNotExist:
+#             raise Http404
 
-    def get(self, request, pk, format=None):
-        part = self.get_part(pk)
-        serializer = PartSerializer(part)
-        return Response(serializer.data)
+#     def get(self, request, pk, format=None):
+#         part = self.get_part(pk)
+#         serializer = PartSerializer(part)
+#         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
-        part = self.get_part(pk)
-        serializer = PartSerializer(part, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def put(self, request, pk, format=None):
+#         part = self.get_part(pk)
+#         serializer = PartSerializer(part, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        part = self.get_part(pk)
-        part.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     def delete(self, request, pk, format=None):
+#         part = self.get_part(pk)
+#         part.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 class PartTasksList(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
 
@@ -133,11 +133,11 @@ class PartTasksList(generics.ListCreateAPIView):
 class TaskList(APIView):
     '''
     List all parts, or create a new part
-    '''
-    def get(self, request, format=None):
-        tasks = Task.objects.all()
-        serializer = TaskSerializer(tasks, many=True)
-        return Response(serializer.data)
+    # '''
+    # def get(self, request, format=None):
+    #     tasks = Task.objects.all()
+    #     serializer = TaskSerializer(tasks, many=True)
+    #     return Response(serializer.data)
 
     def post(self, request, format=None):
         serializer = TaskSerializer(data=request.data)
@@ -184,10 +184,10 @@ class ToBuyList(APIView):
     '''
     List all parts, or create a new part
     '''
-    def get(self, request, format=None):
-        items = ToBuyItem.objects.all()
-        serializer = ToBuyItemSerializer(items, many=True)
-        return Response(serializer.data)
+    # def get(self, request, format=None):
+    #     items = ToBuyItem.objects.all()
+    #     serializer = ToBuyItemSerializer(items, many=True)
+    #     return Response(serializer.data)
 
     def post(self, request, format=None):
         serializer = ToBuyItemSerializer(data=request.data)
@@ -195,6 +195,32 @@ class ToBuyList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ToBuyListDetail(APIView):
+
+    def get_item(self, pk):
+        try:
+            return ToBuyItem.objects.get(pk=pk)
+        except ToBuyItem.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        item = self.get_item(pk)
+        serializer = ToBuyItemSerializer(item)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        item = self.get_item(pk)
+        serializer = ToBuyItemSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        item = self.get_item(pk)
+        item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class PartDetail(APIView):
     """
@@ -212,7 +238,7 @@ class PartDetail(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        part = self.get_taget_part(pk)
+        part = self.get_part(pk)
         serializer = PartSerializer(part, data=request.data)
         if serializer.is_valid():
             serializer.save()

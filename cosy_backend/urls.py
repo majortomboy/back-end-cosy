@@ -40,6 +40,7 @@ urlpatterns = [
     path('tasks/', views.TaskList.as_view()),
     path('parts/<int:pk>/', views.PartDetail.as_view()),
     path('tasks/<int:pk>/', views.TaskDetail.as_view()),
+    path('tobuyitems/<int:pk>/', views.ToBuyListDetail.as_view()),
     path('tobuyitems/', views.ToBuyList.as_view()),
 ]
 if settings.DEBUG:
