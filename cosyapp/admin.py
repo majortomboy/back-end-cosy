@@ -6,7 +6,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list = ('id', 'title', 'series', 'due_date', 'budget', 'completed', 'photo')
 
 class PartAdmin(admin.ModelAdmin):
-    list = ('id', 'name', 'project')
+    list = ('id', 'name', 'completed', 'project')
 
 class TaskAdmin(admin.ModelAdmin):
     list = ('id', 'description', 'completed', 'part')

@@ -4,6 +4,7 @@ from django.views.generic import ListView
 from django.shortcuts import render
 from rest_framework import response
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
 from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
@@ -18,8 +19,10 @@ class ProjectList(APIView):
     '''
     List all projects, or create a new project
     '''
+    parser_classes = (MultiPartParser, FormParser)
+
     def get(self, request, format=None):
-        projects = Project.objects.all()
+        projects = Project.objects.all().order_by('id')
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
 
@@ -79,7 +82,7 @@ class PartList(APIView):
     List all projects, or create a new project
     '''
     def get(self, request, format=None):
-        parts = Part.objects.all()
+        parts = Part.objects.all().order_by('id')
         serializer = PartSerializer(parts, many=True)
         return Response(serializer.data)
 
@@ -240,6 +243,15 @@ class PartDetail(APIView):
     def put(self, request, pk, format=None):
         part = self.get_part(pk)
         serializer = PartSerializer(part, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk, format=None):
+        part = self.get_part(pk)
+        serializer = PartSerializer(part, data=request.data, partial=True)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

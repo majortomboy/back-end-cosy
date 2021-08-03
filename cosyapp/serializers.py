@@ -10,7 +10,7 @@ class TaskSerializer(serializers.ModelSerializer):
 class PartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Part
-        fields = ('id', 'name', 'project')
+        fields = ('id', 'name', 'completed', 'project')
         # depth = 1
 
 class ProjectSerializer(serializers.ModelSerializer):

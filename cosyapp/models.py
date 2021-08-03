@@ -18,6 +18,7 @@ class Project(models.Model):
 
 class Part(models.Model):
     name = models.CharField(max_length=100)
+    completed = models.BooleanField(default=False)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
