@@ -65,7 +65,7 @@ class ProjectPartsList(generics.ListCreateAPIView): # should this be ListCreateA
     serializer_class = PartSerializer
 
     def get_queryset(self):
-        return Part.objects.filter(project=self.kwargs.get('pk'))
+        return Part.objects.filter(project=self.kwargs.get('pk')).order_by('id')
 
     def post(self, request, pk):
         print(request.data)
@@ -124,7 +124,7 @@ class PartTasksList(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
 
     def get_queryset(self):
-        return Task.objects.filter(part=self.kwargs.get('pk'))
+        return Task.objects.filter(part=self.kwargs.get('pk')).order_by('id')
 
     # def post(self, request, format=None):
     #     serializer = TaskSerializer(data=request.data)
@@ -172,6 +172,15 @@ class TaskDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def patch(self, request, pk, format=None):
+        task = self.get_task(pk)
+        serializer = TaskSerializer(task, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def delete(self, request, pk, format=None):
         task = self.get_task(pk)
         task.delete()
@@ -181,7 +190,7 @@ class ProjectToBuyList(generics.ListCreateAPIView):
     serializer_class = ToBuyItemSerializer
 
     def get_queryset(self):
-        return ToBuyItem.objects.filter(project=self.kwargs.get('pk'))
+        return ToBuyItem.objects.filter(project=self.kwargs.get('pk')).order_by('id')
 
 class ToBuyList(APIView):
     '''
@@ -215,6 +224,15 @@ class ToBuyListDetail(APIView):
     def put(self, request, pk, format=None):
         item = self.get_item(pk)
         serializer = ToBuyItemSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk, format=None):
+        item = self.get_item(pk)
+        serializer = ToBuyItemSerializer(item, data=request.data, partial=True)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
