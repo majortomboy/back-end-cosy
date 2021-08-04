@@ -136,7 +136,8 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = [
-    'http://cosy-cosplay-planner.herokuapp.com',
+    'https://cosy-cosplay-planner.herokuapp.com',
+    'https://cosy-cosplay-planner-api.herokuapp.com',
     'http://localhost:3000',
     'http://localhost:8000',
 ]
