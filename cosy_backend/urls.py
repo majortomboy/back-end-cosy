@@ -20,6 +20,11 @@ from rest_framework import routers
 from cosyapp import views
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.conf import settings
+# from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView
+)
 # from cosyapp.views import UploadList
 
 # router = routers.DefaultRouter()
@@ -31,6 +36,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include(router.urls)),
+    path('', views.home, name='home'),
+    # path('projects/', views.project_list),
     path('projects/', views.ProjectList.as_view()),
     path('projects/<int:pk>/', views.ProjectDetail.as_view()),
     path('projects/<int:pk>/parts/', views.ProjectPartsList.as_view()),
@@ -42,6 +49,14 @@ urlpatterns = [
     path('tasks/<int:pk>/', views.TaskDetail.as_view()),
     path('tobuyitems/<int:pk>/', views.ToBuyListDetail.as_view()),
     path('tobuyitems/', views.ToBuyList.as_view()),
+    # path('token-auth/', obtain_jwt_token),
+    # path('current_user/', views.current_user),
+    # path('users/create/', views.CreateUserView.as_view()),
+    path('user/register/', views.UserCreate.as_view(), name="create_user"),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair')
+
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

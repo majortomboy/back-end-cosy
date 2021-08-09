@@ -3,7 +3,7 @@ from .models import Project, Part, Task, ToBuyItem
 
 # Register your models here.
 class ProjectAdmin(admin.ModelAdmin):
-    list = ('id', 'title', 'series', 'due_date', 'budget', 'completed', 'photo')
+    list = ('id', 'title', 'series', 'due_date', 'budget', 'completed', 'photo', 'owner')
 
 class PartAdmin(admin.ModelAdmin):
     list = ('id', 'name', 'completed', 'project')
