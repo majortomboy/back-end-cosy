@@ -36,7 +36,7 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include(router.urls)),
-    path('', views.home, name='home'),
+    # path('', views.home, name='home'),
     # path('projects/', views.project_list),
     path('projects/', views.ProjectList.as_view()),
     path('projects/<int:pk>/', views.ProjectDetail.as_view()),
