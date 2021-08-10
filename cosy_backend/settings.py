@@ -208,7 +208,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
 ]
 
-CORS_ALLOW_HEADERS = ("x-requested-with", "content-type", "accept", "origin", "authorization", "x-csrftoken")
+CORS_ALLOW_HEADERS = ("x-requested-with", "content-type", "accept", "origin", "authorization", "x-csrftoken", "access-control-allow-origin")
 
 CORS_ALLOW_CREDENTIALS = True
 # MEDIA_ROOT = 'media/'
