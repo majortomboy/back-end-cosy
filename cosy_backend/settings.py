@@ -143,8 +143,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home' # should this actually be 'projects'?
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'home' # should this actually be 'projects'?
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

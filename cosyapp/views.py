@@ -42,8 +42,8 @@ class UserCreate(APIView):
                 return Response(status=status.HTTP_201_CREATED)
         return Response(reg_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def home(request):
-    return render(request, 'home.html')
+# def home(request):
+#     return render(request, 'home.html')
 
 # @api_view(['GET'])
 # def project_list(request):
