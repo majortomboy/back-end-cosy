@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'cosyapp',
     'corsheaders',
     'rest_framework',
-    'storages'
+    'storages',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [

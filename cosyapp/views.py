@@ -11,6 +11,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django.http import Http404, HttpResponseRedirect
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -41,6 +42,18 @@ class UserCreate(APIView):
             if newuser:
                 return Response(status=status.HTTP_201_CREATED)
         return Response(reg_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class BlacklistTokenView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response(status.HTTP_400_BAD_REQUEST)
 
 # def home(request):
 #     return render(request, 'home.html')

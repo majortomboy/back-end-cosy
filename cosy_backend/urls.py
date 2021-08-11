@@ -55,7 +55,8 @@ urlpatterns = [
     path('user/register/', views.UserCreate.as_view(), name="create_user"),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair')
+    path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('logout/blacklist/', views.BlacklistTokenView.as_view(), name='blacklist')
 
 ]
 if settings.DEBUG:
