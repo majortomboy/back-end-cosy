@@ -231,7 +231,7 @@ class TaskDetail(APIView):
             raise Http404
 
     def get(self, request, pk, format=None):
-        task = self.get_task(pk)
+        task = self.get_task(pk).order_by('id')
         serializer = TaskSerializer(task)
         return Response(serializer.data)
 
@@ -291,7 +291,7 @@ class ToBuyListDetail(APIView):
             raise Http404
 
     def get(self, request, pk, format=None):
-        item = self.get_item(pk)
+        item = self.get_item(pk).order_by('id')
         serializer = ToBuyItemSerializer(item)
         return Response(serializer.data)
 
@@ -329,7 +329,7 @@ class PartDetail(APIView):
             raise Http404
 
     def get(self, request, pk, format=None):
-        part = self.get_part(pk)
+        part = self.get_part(pk).order_by('id')
         serializer = PartSerializer(part)
         return Response(serializer.data)
 
