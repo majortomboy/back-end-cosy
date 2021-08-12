@@ -14,7 +14,11 @@ class TaskAdmin(admin.ModelAdmin):
 class ToBuyItemAdmin(admin.ModelAdmin):
     list = ('id', 'description', 'price', 'link', 'completed', 'project')
 
+# class ReferencePhotoAdmin(admin.ModelAdmin):
+#     list = ('id', 'description', 'photo', 'owner')
+
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Part, PartAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(ToBuyItem, ToBuyItemAdmin)
+# admin.site.register(ReferencePhoto, ReferencePhotoAdmin)

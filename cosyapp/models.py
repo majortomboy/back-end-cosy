@@ -42,10 +42,7 @@ class ToBuyItem(models.Model):
     def __str__(self):
         return self.description
 
-# from django.contrib.auth.models import  User, Group
-# class Portfolio(models.Model):
-#  owner = models.ForeignKey(User,verbose_name = 'User',related_name='portfolios')
-#  company = models.TextField(null=True)
-#  volume = models.IntegerField(blank=True)
-#  date = models.DateField(null=True)
-#  isin = models.TextField(null=True)
+# class ReferencePhoto(models.Model):
+#     description = models.CharField(max_length=200)
+#     photo = models.ImageField(default=None, blank=True, upload_to='uploads/')
+#     project = models.ForeignKey(Project, on_delete=models.CASCADE)

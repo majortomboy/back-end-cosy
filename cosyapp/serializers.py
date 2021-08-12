@@ -43,6 +43,12 @@ class ToBuyItemSerializer(serializers.ModelSerializer):
         model = ToBuyItem
         fields = ('id', 'description', 'price', 'link', 'completed', 'project')
 
+# class ReferencePhotoSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = ReferencePhoto
+#         fields = ('id', 'description', 'photo', 'project')
+
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
