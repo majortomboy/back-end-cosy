@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Part, Task, ToBuyItem
+from .models import Project, Part, Task, ToBuyItem, ReferencePhoto
 
 # Register your models here.
 class ProjectAdmin(admin.ModelAdmin):
@@ -14,11 +14,11 @@ class TaskAdmin(admin.ModelAdmin):
 class ToBuyItemAdmin(admin.ModelAdmin):
     list = ('id', 'description', 'price', 'link', 'completed', 'project')
 
-# class ReferencePhotoAdmin(admin.ModelAdmin):
-#     list = ('id', 'description', 'photo', 'owner')
+class ReferencePhotoAdmin(admin.ModelAdmin):
+    list = ('id', 'photo', 'owner')
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Part, PartAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(ToBuyItem, ToBuyItemAdmin)
-# admin.site.register(ReferencePhoto, ReferencePhotoAdmin)
+admin.site.register(ReferencePhoto, ReferencePhotoAdmin)

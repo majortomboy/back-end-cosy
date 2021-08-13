@@ -42,7 +42,9 @@ class ToBuyItem(models.Model):
     def __str__(self):
         return self.description
 
-# class ReferencePhoto(models.Model):
-#     description = models.CharField(max_length=200)
-#     photo = models.ImageField(default=None, blank=True, upload_to='uploads/')
-#     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+class ReferencePhoto(models.Model):
+    photo = models.ImageField(default=None, blank=True, upload_to='uploads/')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.description

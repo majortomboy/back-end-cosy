@@ -3,7 +3,7 @@ from rest_framework_jwt.serializers import User
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Project, Part, Task, ToBuyItem
+from .models import Project, Part, Task, ToBuyItem, ReferencePhoto
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
@@ -43,11 +43,11 @@ class ToBuyItemSerializer(serializers.ModelSerializer):
         model = ToBuyItem
         fields = ('id', 'description', 'price', 'link', 'completed', 'project')
 
-# class ReferencePhotoSerializer(serializers.ModelSerializer):
+class ReferencePhotoSerializer(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = ReferencePhoto
-#         fields = ('id', 'description', 'photo', 'project')
+    class Meta:
+        model = ReferencePhoto
+        fields = ('id', 'photo', 'project')
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
